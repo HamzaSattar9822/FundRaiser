@@ -1,47 +1,55 @@
-## Getting Started
+# FundRaiser (Fundereum)
 
-Create a project using this example:
+Crowdfunding DApp concept where NGOs and campaigns raise funds on-chain with crypto. Solidity crowdfunding contract plus a React (Vite) front end for browsing projects, contributing, and account flows.
 
-```bash
-npx thirdweb create --contract --template hardhat-javascript-starter
+## Idea
+
+Campaigns publish funding goals. Supporters send crypto. The contract records pledges and project state. The UI wraps that flow with Tailwind styling and a simple store/reducer pattern.
+
+## Architecture
+
+```mermaid
+flowchart TB
+  UI["React Vite UI"]
+  Store["Redux-style store / reducer"]
+  ETH["Ethereum wallet"]
+  Contract["CrowdFund.sol"]
+
+  UI --> Store
+  UI --> ETH --> Contract
 ```
 
-You can start editing the page by modifying `contracts/Contract.sol`.
+Key files:
 
-To add functionality to your contracts, you can use the `@thirdweb-dev/contracts` package which provides base contracts and extensions to inherit. The package is already installed with this project. Head to our [Contracts Extensions Docs](https://portal.thirdweb.com/contractkit) to learn more.
+- `CrowdFund.sol` - crowdfunding contract
+- `CrowdFund.json` / `.dbg.json` - compile artifacts
+- `main.jsx`, `Body.jsx`, `Project.jsx`, `Account.jsx`, `SignUp.jsx` - UI
+- `hardhat.config.js` - Hardhat tooling
+- `vite.config.js` - frontend build
 
-## Building the project
+## Stack
 
-After any changes to the contract, run:
+- Solidity + Hardhat
+- React + Vite + Tailwind
+- Wallet interaction for on-chain calls
+
+## Run (frontend)
 
 ```bash
+npm install
+# or: yarn
+npm run dev
+```
+
+## Contracts
+
+```bash
+# compile / build via Hardhat scripts in package.json
 npm run build
-# or
-yarn build
 ```
 
-to compile your contracts. This will also detect the [Contracts Extensions Docs](https://portal.thirdweb.com/contractkit) detected on your contract.
+Deploy targets depend on your network config in `hardhat.config.js` and wallet keys (never commit private keys).
 
-## Deploying Contracts
+## Status
 
-When you're ready to deploy your contracts, just run one of the following command to deploy you're contracts:
-
-```bash
-npm run deploy
-# or
-yarn deploy
-```
-
-## Releasing Contracts
-
-If you want to release a version of your contracts publicly, you can use one of the followings command:
-
-```bash
-npm run release
-# or
-yarn release
-```
-
-## Join our Discord!
-
-For any questions, suggestions, join our discord at [https://discord.gg/thirdweb](https://discord.gg/thirdweb).
+Prototype / academic-style DApp. Review contracts carefully before any mainnet use.
